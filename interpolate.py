@@ -81,7 +81,7 @@ def fieldinterpolation(tdic):
         dictdict[key[0][0]][key[1][0]] = tdic[key]
     print '[*] latitude', str(bottom)+'...'+str(top)
     print '[*] longtitude', str(left)+'...'+str(right)
-    xx, yy = np.mgrid[left:right:300j, bottom:top:300j]
+    xx, yy = np.mgrid[left:right:60j, bottom:top:60j]
     
     dic = dict((key, tdic[key]) for key in tdic.keys() if tdic[key] < border )
     filtered_dic = dict((key, tdic[key]) for key in tdic.keys() if tdic[key] >= border )
@@ -91,7 +91,13 @@ def fieldinterpolation(tdic):
 
     plt.ioff()
     fig = plt.figure(1, figsize=(4,4))
-    plt.scatter(xx,yy,10,zz,cmap=py.cm.RdYlGn, edgecolors='none')
+    #plt.scatter(xx,yy,10,zz,cmap=py.cm.RdYlGn, edgecolors='none')
+    for i in range(len(zz)):
+        for j in range(len(zz[i])):
+            if zz[i][z] > 0:
+                plt.plot(xx[i][j], yy[i][j], 'bo', markersize=2,markeredgecolor = 'none')
+            else:
+                plt.plot(xx[i][j], yy[i][j], 'bo', markersize=2,markeredgecolor = 'none')
     if show_points:
         for i in filtered_dic.keys():
             if i[0][0] > left and i[0][0] < right and i[1][0] > bottom and i[1][0] < top:
